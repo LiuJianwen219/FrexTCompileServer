@@ -3,6 +3,8 @@ kind: Job
 metadata:
   name: compile-job-id
 spec:
+  # 参数无效？？？？
+  ttlSecondsAfterFinished: 100
   template:
     spec:
       restartPolicy: Never
