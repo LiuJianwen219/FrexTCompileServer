@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frext-test
+  labels:
+    app: frext-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frext-test
+  template:
+    metadata:
+      labels:
+        app: frext-test
+    spec:
+      serviceAccountName:
+        frext
+      containers:
+      - name: frext-test
+        image: wxwd14388/vclient:v1.0.2
+        command: ["/bin/sh"]
+        args: ["-c", "while true; do echo hello; sleep 4;done"]
+        volumeMounts:
+          - name: vivado
+            mountPath: /tools
+          - name: source
+            mountPath: /FrexTSource
+      volumes:
+        - name: vivado
+          hostPath:
+            path: /tools
+            type: Directory
+        - name: source
+          hostPath:
+            path: /tmp/FrexT
+            type: Directory

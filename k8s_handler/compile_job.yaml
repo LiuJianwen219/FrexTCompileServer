@@ -1,0 +1,39 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: compile-job-id
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: compile-vivado
+        image: wxwd14388/vclient:v1.0.2
+        command: ["/bin/sh"]
+        args: [
+          "compile.sh",
+          "/FrexTSource/test.zip",
+          "/FrexTSource/test",
+          "/tools/Xilinx/Vivado/2020.1/bin/vivado", # vivado.exe dir
+          "/FrexTSource/main.tcl",
+          "xc7k160tffg676-2L",
+          "/FrexTSource",
+          "topMod60",
+          "4",
+        ]
+        volumeMounts:
+          - name: vivado
+            mountPath: /tools
+          - name: source
+            mountPath: /FrexTSource
+      volumes:
+        - name: vivado
+          hostPath:
+            path: /tools
+            type: Directory
+        - name: source
+          hostPath:
+            path: /tmp/FrexT
+            type: Directory
+
+#  backoffLimit: 4

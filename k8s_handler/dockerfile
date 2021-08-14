@@ -1,0 +1,4 @@
+FROM centos:7
+COPY unzip /bin
+WORKDIR /FrexT
+COPY compile.sh /FrexT
