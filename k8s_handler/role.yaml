@@ -4,6 +4,6 @@ metadata:
   namespace: default
   name: pod-reader
 rules:
-- apiGroups: [""] # "" 标明 core API 组
-  resources: ["pods"]
-  verbs: ["get", "watch", "list"]
+- apiGroups: ["", "batch"] # "" 标明 core API 组
+  resources: ["pods", "jobs"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]

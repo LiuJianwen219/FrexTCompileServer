@@ -5,6 +5,7 @@ metadata:
 spec:
   # 参数无效？？？？
   ttlSecondsAfterFinished: 100
+  backoffLimit: 4
   template:
     spec:
       restartPolicy: Never
@@ -38,4 +39,3 @@ spec:
             path: /tmp/FrexT
             type: Directory
 
-#  backoffLimit: 4
