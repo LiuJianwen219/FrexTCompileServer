@@ -1,0 +1,33 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: compile-job-id
+spec:
+  ttlSecondsAfterFinished: 10
+  backoffLimit: 4
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: compile-vivado
+        image: wxwd14388/frext-compiler:v1.1.0
+        command: ["python"]
+        args: [
+          "main.py",
+          "-uuljw",
+          "-tt123",
+          "-ss123", # vivado.exe dir
+          "-cmod60",
+          "-ntopMod60",
+          "-lmain",
+          "-fhttp://frext-file-svc:8010/",
+        ]
+        volumeMounts:
+          - name: vivado
+            mountPath: /tools
+      volumes:
+        - name: vivado
+          hostPath:
+            path: /tools
+            type: Directory
+
