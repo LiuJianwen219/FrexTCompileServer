@@ -1,33 +1,33 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: frext-test
+  name: frext-compile
   labels:
-    app: frext-test
+    app: frext-compile
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: frext-test
+      app: frext-compile
   template:
     metadata:
       labels:
-        app: frext-test
+        app: frext-compile
     spec:
       serviceAccountName:
         frext
       containers:
-      - name: frext-test
-        image: python:3.6.14-slim-stretch
+      - name: frext-compile
+        image: frext-compiler:v1.2.3
         command: ["/bin/sh"]
         args: ["-c", "while true; do echo hello; sleep 4;done"]
         volumeMounts:
-        - mountPath: /FrexT
-          name: project-volume
+        - mountPath: /tmp/FrexT
+          name: frext-job
+        ports:
+          - containerPort: 8020
       volumes:
-        - name: project-volume
+        - name: frext-job
           hostPath:
-            # directory location on host
-            path: /mnt/hgfs/0Web/FrexTCompileServer
-            # this field is optional
+            path: /tmp/FrexT/job
             type: Directory

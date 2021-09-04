@@ -8,32 +8,28 @@ import uuid
 from time import sleep
 from k8s_handler import constants as const
 from compiler import constants as c_const
+from compiler import constants as c_const
+import config as cfg
 
 
 class k8s_handler:
-    # "/tmp/FrexT"
-    def __init__(self, tempPath):
+    def __init__(self):
         # Configs can be set in Configuration class directly or using helper
         # utility. If no argument provided, the config will be loaded from
         # default location.
         config.load_incluster_config()
         self.api_instance = client.BatchV1Api()
-        self.tempPath = tempPath
         self.jobName = None
         self.namespace = "default"
 
     # Create a job object with client-python API. The job we
     # created is same as the `pi-job.yaml` in the /examples folder.
     # "mod60", "topMod60"
-    def create_job_object(self, topic, topModuleName):
+    def create_job_object(self, values):
         # volumes mount to pod
         volume_mount_vivado = client.V1VolumeMount(
             name="vivado",
             mount_path=const.vivadoPath,
-        )
-        volume_mount_source = client.V1VolumeMount(
-            name="source",
-            mount_path=const.inContainerSourceRoot
         )
 
         # volume definitions
@@ -44,33 +40,24 @@ class k8s_handler:
                 type="Directory",
             )
         )
-        volume_source = client.V1Volume(
-            name="source",
-            host_path=client.V1HostPathVolumeSource(
-                path=self.tempPath,
-                type="Directory",
-            )
-        )
 
         # Configureate Pod template container
         container = client.V1Container(
             name="cmp-job-" + uuid.uuid1().__str__(),
             image=const.image,
-            command=["/bin/sh"],
+            command=["python"],
             args=[
-                const.compileScript,
-                os.path.join(const.inContainerSourceRoot, topic + c_const.questions_suffix),
-                os.path.join(const.inContainerSourceRoot, topic),
-                const.vivado,  # vivado.exe dir
-                os.path.join(const.inContainerSourceRoot, const.main_tcl),
-                const.FPGAVersion,
-                const.inContainerSourceRoot,
-                topModuleName,
-                const.compileThread,
+                "main.py",
+                "-u"+values[c_const.c_userId],
+                "-t"+values[c_const.c_testId],
+                "-s"+values[c_const.c_submitId],
+                "-c"+values[c_const.c_topic],
+                "-n"+values[c_const.c_topModuleName],
+                "-l"+values[c_const.c_tclName],
+                "-f"+values[c_const.c_fileServerUrl]
             ],
             volume_mounts=[
                 volume_mount_vivado,
-                volume_mount_source
             ],
         )
 
@@ -82,7 +69,6 @@ class k8s_handler:
                 containers=[container],
                 volumes=[
                     volume_vivado,
-                    volume_source,
                 ],
             ),
         )
@@ -95,7 +81,7 @@ class k8s_handler:
         )
 
         # Instantiate the job object
-        self.jobName = "cmp-" + uuid.uuid1().__str__()
+        self.jobName = "cmp-job-" + uuid.uuid1().__str__()
         job = client.V1Job(
             api_version="batch/v1",
             kind="Job",
@@ -165,8 +151,8 @@ def list_pods(namespace):
 
 
 def test():
-    job_handler = k8s_handler("/tmp/FrexT")
-    job_spec = job_handler.create_job_object("test", "topMod60")
+    job_handler = k8s_handler()
+    job_spec = job_handler.create_job_object("/tmp/FrexT", "test", "topMod60")
     job_handler.create_job(job_spec)
 
 

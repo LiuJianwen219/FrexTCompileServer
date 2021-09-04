@@ -12,15 +12,17 @@ from compiler.compile import CompileHandler
 
 
 from tornado.options import define, options
-define("port", default=8020, help="run on the given port ", type=int)
+define("port", default=8012, help="run on the given port ", type=int)
 define("log_path", default='/tmp', help="log path ", type=str)
 
 class CompileServer:
     def __init__(self, configs):
-        print(configs)
         print("config")
+        print(configs)
+        print(options.port)
 
     def init_compile_server(self):
+        print("init")
         tornado.options.parse_command_line()
         app = tornado.web.Application(handlers=[
             (r"/help/", HelpHandler),
@@ -32,7 +34,7 @@ class CompileServer:
         ])
         http_server = tornado.httpserver.HTTPServer(app)
         http_server.listen(options.port)
-        print("init")
+
 
     def run(self):
         print("run")

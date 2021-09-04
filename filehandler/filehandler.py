@@ -18,5 +18,4 @@ def file_writer(fire_dir, file_name, file_content):
     if not os.path.exists(fire_dir):
         os.makedirs(fire_dir)
     with open(os.path.join(fire_dir, file_name), 'wb+') as destination:
-        for chunk in file_content.chunks():
-            destination.write(chunk)
+        destination.write(file_content)

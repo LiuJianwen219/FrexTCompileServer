@@ -103,7 +103,7 @@ wait_on_run synth_1
 
 
 
-#
+
 # STEP$5: run logic optimization, placement, physical logic optimization, route and
 # bitstream generation. Generates design checkpoints, utilization and timing
 # reports, plus custom reports.
