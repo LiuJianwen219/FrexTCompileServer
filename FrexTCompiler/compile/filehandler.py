@@ -1,6 +1,8 @@
 import os
 import logging
+
 logger = logging.getLogger(__name__)
+
 
 # read file interface, maybe DFS future
 def file_reader(file_path):
@@ -19,3 +21,6 @@ def file_writer(fire_dir, file_name, file_content):
         os.makedirs(fire_dir)
     with open(os.path.join(fire_dir, file_name), 'wb+') as destination:
         destination.write(file_content)
+    if len(file_content)<10:
+        return None
+    return 1

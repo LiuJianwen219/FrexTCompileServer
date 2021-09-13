@@ -27,6 +27,7 @@ class k8s_handler:
     # "mod60", "topMod60"
     def create_job_object(self, values):
         # volumes mount to pod
+        print(values)
         volume_mount_vivado = client.V1VolumeMount(
             name="vivado",
             mount_path=const.vivadoPath,
@@ -42,6 +43,17 @@ class k8s_handler:
         )
 
         # Configureate Pod template container
+        print([
+                "main.py",
+                "-u"+values[c_const.c_userId],
+                "-t"+values[c_const.c_testId],
+                "-s"+values[c_const.c_submitId],
+                "-c"+values[c_const.c_topic],
+                "-n"+values[c_const.c_topModuleName],
+                "-l"+values[c_const.c_tclName],
+                "-f"+values[c_const.c_fileServerUrl],
+                "-x"+values[c_const.c_compile_server_url],
+            ])
         container = client.V1Container(
             name="cmp-job-" + uuid.uuid1().__str__(),
             image=const.image,
@@ -54,7 +66,8 @@ class k8s_handler:
                 "-c"+values[c_const.c_topic],
                 "-n"+values[c_const.c_topModuleName],
                 "-l"+values[c_const.c_tclName],
-                "-f"+values[c_const.c_fileServerUrl]
+                "-f"+values[c_const.c_fileServerUrl],
+                "-x"+values[c_const.c_compile_server_url],
             ],
             volume_mounts=[
                 volume_mount_vivado,

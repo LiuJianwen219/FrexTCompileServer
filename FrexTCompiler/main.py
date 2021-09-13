@@ -6,22 +6,26 @@ from compile import compile
 
 
 def main(argv):
+    global opts
     values = {}
     try:
-        opts, args = getopt.getopt(argv, "u:t:s:c:n:l:f:", [
+        opts, args = getopt.getopt(argv, "u:t:s:c:n:l:f:x:", [
             "userId=", "testId=",
             "submitId=", "topic=",
             "topModuleName=", "tcl=",
-            "fileServerUrl=",
+            "fileServerUrl=", "compileServerUrl=",
         ])
+        print(opts)
     except getopt.GetoptError:
-        print('we need help.')
-        sys.exit(2)
+        print('we need help 2.')
+        print(opts)
+    finally:
+        print(opts)
 
     for opt, arg in opts:
         if opt == '-h':
-            print('we need help.')
-            sys.exit()
+            print('we need help 3.')
+            print(opts)
         elif opt in ("-u", "--userId"):
             values[const.c_userId] = arg
         elif opt in ("-t", "--testId"):
@@ -36,6 +40,8 @@ def main(argv):
             values[const.c_tcl] = arg
         elif opt in ("-f", "--fileServerUrl"):
             values[const.c_file_server_url] = arg
+        elif opt in ("-x", "--compileServerUrl"):
+            values[const.c_compile_server_url] = arg
 
     compile.compile_project(values)
 

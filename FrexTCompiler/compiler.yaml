@@ -4,23 +4,24 @@ metadata:
   name: compile-job-id
 spec:
   ttlSecondsAfterFinished: 10
-  backoffLimit: 4
+  backoffLimit: 2
   template:
     spec:
       restartPolicy: Never
       containers:
       - name: compile-vivado
-        image: wxwd14388/frext-compiler:v1.1.0
+        image: wxwd14388/frext-compiler:v1.1.1
         command: ["python"]
         args: [
           "main.py",
-          "-uuljw",
-          "-tt123",
-          "-ss123", # vivado.exe dir
+          "-u1dcdba100d6411ec9d1400d86134f158",
+          "-tb9ad9a66109911ec93e3ce1570f68d11",
+          "-sc4f3fc76109911ec99face1570f68d11", # vivado.exe dir
           "-cmod60",
           "-ntopMod60",
           "-lmain",
           "-fhttp://frext-file-svc:8010/",
+          "-hhttp://frext-compile-svc:8012/",
         ]
         volumeMounts:
           - name: vivado

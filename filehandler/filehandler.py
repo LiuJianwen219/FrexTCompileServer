@@ -1,6 +1,8 @@
 import os
 import logging
+
 logger = logging.getLogger(__name__)
+
 
 # read file interface, maybe DFS future
 def file_reader(file_path):

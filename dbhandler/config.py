@@ -1,6 +1,6 @@
-web_server_url = "http://frext-online-svc:8030/"
+web_server_url = "192.168.80.2:8030/"
 web_server_api_compile_status = "compile_status/"
-web_server_api_compile_result = "compile/compile_result"
+web_server_api_compile_result = "compile_result/"
 
 compile_server_url = "http://frext-compile-svc:8012/"
 file_server_url = "http://frext-file-svc:8010/"

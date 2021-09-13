@@ -18,16 +18,16 @@ spec:
         frext
       containers:
       - name: frext-compile
-        image: frext-compiler:v1.2.3
+        image: wxwd14388/frext-compile-test:v1.2.1
         command: ["/bin/sh"]
         args: ["-c", "while true; do echo hello; sleep 4;done"]
         volumeMounts:
         - mountPath: /tmp/FrexT
           name: frext-job
         ports:
-          - containerPort: 8020
+          - containerPort: 8012
       volumes:
         - name: frext-job
           hostPath:
-            path: /tmp/FrexT/job
+            path: /mnt/hgfs/0Web/FrexTCompileServer
             type: Directory

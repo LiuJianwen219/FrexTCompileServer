@@ -1,11 +1,10 @@
+import json
+
 import tornado.web
-import zipfile
-import os
-from tornado.escape import json_decode
 import config
-from compiler import request_utils
 from k8s_handler import k8s_handler
 from compiler import constants as const
+from situation import status
 
 
 class CompileHandler(tornado.web.RequestHandler):
@@ -76,6 +75,7 @@ class CompileHandler(tornado.web.RequestHandler):
         submitId = self.get_argument("submitId")
         topic = self.get_argument("topic")
         topModuleName = self.get_argument("topModuleName")
+
         values = {
             const.c_userId: userId,
             const.c_testId: testId,
@@ -83,12 +83,31 @@ class CompileHandler(tornado.web.RequestHandler):
             const.c_topic: topic,
             const.c_topModuleName: topModuleName,
             const.c_tclName: const.tcls_Name,
-            const.c_fileServerUrl: config.file_server_url
+            const.c_fileServerUrl: config.file_server_url,
+            const.c_compile_server_url: config.compile_server_url,
+            "state": config.request_success,
+            "status": "开始处理编译任务",
+            "message": "Success start to compile\n"
         }
+        status.update_status(values)
+
         kh = k8s_handler.k8s_handler()
         job = kh.create_job_object(values)
+
+        # 设置响应状态码
+        self.set_status(200)
+        # 设置头信息
+        self.set_header("language", "python")
+        # self.write方法除了帮我们将字典转换为json字符串之外，还帮我们将Content-Type设置为application/json; charset=UTF-8。
+        res = {
+            "state": config.request_success,
+            "status": "编译任务处理完成",
+            "message": "Success: compile job started.\n",
+            "content": values,
+        }
+        self.write(json.dumps(res))
+
         kh.create_job(job)
-        self.write(config.request_success)
 
     def write_error(self, status_code, **kwargs):
         self.write('Holly Shit Error? (%s) (%s)' % (status_code, "FrexT Compile Server"))

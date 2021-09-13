@@ -27,6 +27,9 @@ c_topModuleName = "topModuleName"
 c_fileServerUrl = "fileServerUrl"
 c_tclName = "tclName"
 
+
+c_compile_server_url = "compileServerUrl"
+
 FPGA_version = "xc7k160tffg676-2L"
 
 see_path = "/FrexT"
