@@ -19,6 +19,7 @@ class ResultHandler(tornado.web.RequestHandler):
         state = self.get_argument("state")
         status = self.get_argument("status")
         message = self.get_argument("message")
+        threadIndex = self.get_argument("threadIndex")
 
         print(state)
 
@@ -29,7 +30,8 @@ class ResultHandler(tornado.web.RequestHandler):
             const.c_topic: topic,
             "state": state,
             "status": status,
-            "message": message
+            "message": message,
+            "threadIndex": threadIndex,
         }
         if update_result(values) == config.request_failed:
             self.set_status(404)
