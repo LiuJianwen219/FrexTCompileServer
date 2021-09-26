@@ -75,6 +75,7 @@ class CompileHandler(tornado.web.RequestHandler):
         submitId = self.get_argument("submitId")
         topic = self.get_argument("topic")
         topModuleName = self.get_argument("topModuleName")
+        threadIndex = self.get_argument("threadIndex")
 
         values = {
             const.c_userId: userId,
@@ -87,7 +88,8 @@ class CompileHandler(tornado.web.RequestHandler):
             const.c_compile_server_url: config.compile_server_url,
             "state": config.request_success,
             "status": "开始处理编译任务",
-            "message": "Success start to compile\n"
+            "message": "Success start to compile\n",
+            const.c_thread_index: threadIndex,
         }
         status.update_status(values)
 

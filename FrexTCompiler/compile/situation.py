@@ -16,6 +16,7 @@ class SituationHandler:
         self.topic = values[const.c_topic]
         self.tclName = values[const.c_tcl]
         self.topModuleName = values[const.c_topModuleName]
+        self.threadIndex = values[const.c_thread_index]
         pass
 
     def post_status(self, state, status, message):
@@ -30,11 +31,13 @@ class SituationHandler:
             "state": state,
             "status": status,
             "message": message,
+            const.c_thread_index: self.threadIndex,
         }
         data = {
             "state": state,
             "status": status,
             "message": message,
+            const.c_thread_index: self.threadIndex,
         }
         r = requests.post(url=url, params=values, data=data)
         if r.status_code.__str__() != "200":
@@ -56,11 +59,13 @@ class SituationHandler:
             "state": state,
             "status": status,
             "message": message,
+            const.c_thread_index: self.threadIndex,
         }
         data = {
             "state": state,
             "status": status,
             "message": message,
+            const.c_thread_index: self.threadIndex,
         }
         r = requests.post(url=url, params=values, data=data)
         if r.status_code.__str__() != "200":

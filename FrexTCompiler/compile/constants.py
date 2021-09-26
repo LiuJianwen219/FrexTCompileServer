@@ -29,6 +29,7 @@ c_topic = "topic"
 c_topModuleName = "topModuleName"
 c_tcl = "tcl"
 c_file_server_url = "fileServerUrl"
+c_thread_index = "threadIndex"
 
 # -----------------------
 # for return compile status/result

@@ -20,12 +20,13 @@ define("log_path", default='/tmp', help="log path ", type=str)
 
 class CompileServer:
     def __init__(self, configs):
-        print("config")
+        print("config compile server")
         print(configs)
         print(options.port)
+        print(options.log_path)
 
     def init_compile_server(self):
-        print("init")
+        print("init compile server")
         tornado.options.parse_command_line()
         app = tornado.web.Application(handlers=[
             (r"/help/", HelpHandler),
@@ -41,5 +42,5 @@ class CompileServer:
         http_server.listen(options.port)
 
     def run(self):
-        print("run")
+        print("run compile server")
         tornado.ioloop.IOLoop.instance().start()

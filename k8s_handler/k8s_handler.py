@@ -53,6 +53,7 @@ class k8s_handler:
                 "-l"+values[c_const.c_tclName],
                 "-f"+values[c_const.c_fileServerUrl],
                 "-x"+values[c_const.c_compile_server_url],
+                "-i"+values[c_const.c_thread_index],
             ])
         container = client.V1Container(
             name="cmp-job-" + uuid.uuid1().__str__(),
