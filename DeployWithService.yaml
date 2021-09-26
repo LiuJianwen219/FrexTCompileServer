@@ -69,7 +69,7 @@ spec:
         frext
       containers:
       - name: frext-compile
-        image: wxwd14388/frext-compile:v1.0.3
+        image: wxwd14388/frext-compile:v1.0.4
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8012
