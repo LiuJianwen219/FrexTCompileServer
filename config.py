@@ -1,4 +1,4 @@
-web_server_url = "http://frext-online-svc:8030/"
+web_server_url = "http://frext-testing-svc:8030/"
 web_server_api_compile_status = "compile_status/"
 web_server_api_compile_result = "compile/compile_result"
 
