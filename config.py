@@ -14,3 +14,8 @@ mysql_utl = "rm-bp1fx85st221svg1r0o.mysql.rds.aliyuncs.com"
 mysql_name = "FrexT"
 mysql_passwd = "FrexT103!"
 mysql_db = "frext_test"
+
+mysql_online_db = "frext_online"
+
+web_online_server_url = "http://frext-testing-svc:8030/"
+web_online_server_api_compile_result = "experiment/compile_result"

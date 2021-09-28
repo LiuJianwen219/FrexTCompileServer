@@ -9,12 +9,14 @@ def main(argv):
     global opts
     values = {}
     try:
-        opts, args = getopt.getopt(argv, "u:t:s:c:n:l:f:x:i:", [
+        opts, args = getopt.getopt(argv, "u:t:s:c:n:l:f:x:i:E:X:C:F:", [
             "userId=", "testId=",
             "submitId=", "topic=",
             "topModuleName=", "tcl=",
             "fileServerUrl=", "compileServerUrl=",
             "threadIndex=",
+            "experimentType=", "experimentId=",
+            "compileId=", "fileNames="
         ])
         print(opts)
     except getopt.GetoptError:
@@ -45,10 +47,20 @@ def main(argv):
             values[const.c_compile_server_url] = arg
         elif opt in ("-i", "--threadIndex"):
             values[const.c_thread_index] = arg
+        elif opt in ("-E", "--experimentType"):
+            values[const.c_experimentType] = arg
+        elif opt in ("-X", "--experimentId"):
+            values[const.c_experimentId] = arg
+        elif opt in ("-C", "--compileId"):
+            values[const.c_compileId] = arg
+        elif opt in ("-F", "--fileNames"):
+            values[const.c_fileNames] = arg
         else:
             sys.exit(3)
-
-    compile.compile_project(values)
+    if not const.c_experimentType in values:
+        compile.compile_project(values)
+    else:
+        compile.compile_online_project(values)
 
 
 # python main.py -u uljw -t t123 -s s123 -c mod60 -n topMod60 -l mod60 -f http://frext-file-svc:8010/

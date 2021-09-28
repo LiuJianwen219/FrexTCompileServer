@@ -71,3 +71,68 @@ def update_result(values):
 
     logger.info("Receive response: " + r.content.__str__())
     return config.request_success
+
+
+class ResultOnlineHandler(tornado.web.RequestHandler):
+    def post(self, *args, **kwargs):
+        print(args)
+        print(kwargs)
+        userId = self.get_argument("userId")
+        experimentType = self.get_argument("experimentType")
+        experimentId = self.get_argument("experimentId")
+        compileId = self.get_argument("compileId")
+        state = self.get_argument("state")
+        status = self.get_argument("status")
+        message = self.get_argument("message")
+        threadIndex = self.get_argument("threadIndex")
+
+        print(state)
+
+        values = {
+            const.c_userId: userId,
+            const.c_experimentType: experimentType,
+            const.c_experimentId: experimentId,
+            const.c_compileId: compileId,
+            "state": state,
+            "status": status,
+            "message": message,
+            "threadIndex": threadIndex,
+        }
+        if update_online_result(values) == config.request_failed:
+            self.set_status(404)
+            self.set_header("language", "python")
+            res = {
+                "state": config.request_failed,
+                "message": "Failed: result.\n",
+                "content": values,
+            }
+            self.write(res)
+        else:
+            # 设置响应状态码
+            self.set_status(200)
+            # 设置头信息
+            self.set_header("language", "python")
+            # self.write方法除了帮我们将字典转换为json字符串之外，还帮我们将Content-Type设置为application/json; charset=UTF-8。
+            res = {
+                "state": config.request_success,
+                "message": "Success: result.\n",
+                "content": values,
+            }
+            self.write(res)
+
+
+def update_online_result(values):
+    logger.info("Try to request online Result: " + json.dumps(values))
+    url = config.web_online_server_url + config.web_online_server_api_compile_result + "/"
+
+    print(url)
+    print(values)
+
+    r = requests.post(url=url, params=values, data=values)
+
+    if r.status_code.__str__() != "200":
+        logger.error("Request Result failed: " + r.headers.__str__())
+        return config.request_failed
+
+    logger.info("Receive response: " + r.content.__str__())
+    return config.request_success

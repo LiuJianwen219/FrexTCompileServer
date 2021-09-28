@@ -44,3 +44,22 @@ compileScript = "compile/compile.sh"
 vivado = "/tools/Xilinx/Vivado/2020.1/bin/vivado"
 FPGAVersion = "xc7k160tffg676-2L"
 compileThread = "4"
+
+# -----------------------
+# online addition
+src_API = "experiment"
+
+bits_online_API = "online_bits"
+
+logs_online_API = "online_logs"
+
+c_experimentType = "experimentType"
+c_experimentId = "experimentId"
+c_compileId = "compileId"
+c_fileName = "fileName"
+c_fileNames = "fileNames"
+
+compileOnlineScript = "compile/compile_online.sh"
+
+status_online_API = "compile_online_status"
+result_online_API = "compile_online_result"

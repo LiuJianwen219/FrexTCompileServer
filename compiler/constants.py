@@ -3,6 +3,7 @@ sys_dir = "sys"
 user_dir = "user"
 
 tcls_Name = "main"
+tcls_online_Name = "main_online"
 tcls_API = "tcls"
 tcls_suffix = ".tcl"
 
@@ -27,6 +28,10 @@ c_topModuleName = "topModuleName"
 c_fileServerUrl = "fileServerUrl"
 c_tclName = "tclName"
 c_thread_index = "threadIndex"
+c_experimentType = "experimentType"
+c_experimentId = "experimentId"
+c_compileId = "compileId"
+c_fileNames = "fileNames"
 
 c_compile_server_url = "compileServerUrl"
 

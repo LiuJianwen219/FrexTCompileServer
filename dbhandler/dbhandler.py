@@ -55,6 +55,52 @@ class DbHandler:
         finally:
             cursor.close()
 
+    def select_online_compile_message(self, uid):
+        cursor = self.connection.cursor()
+        try:
+            print("SELECT message FROM experiment_compilerecord WHERE uid='%s'" % uid)
+            result = cursor.execute("SELECT message FROM experiment_compilerecord WHERE uid='%s'" % uid)
+            print(result)
+
+            self.connection.commit()
+            return cursor.fetchone()
+        except Exception as e:
+            print(str(e))
+            self.connection.rollback()
+        finally:
+            cursor.close()
+        return None
+
+    def update_online_compile_message(self, uid, message):
+        cursor = self.connection.cursor()
+        try:
+            print("is ok?")
+            uid = ''.join(filter(str.isalnum, uid))
+            print("message+", message)
+            print(uid)
+            cursor.execute("UPDATE experiment_compilerecord SET message='%s' WHERE uid='%s'" % (message, uid))
+            self.connection.commit()
+        except:
+            self.connection.rollback()
+        finally:
+            cursor.close()
+
+    def update_online_compile_status(self, uid, status):
+        cursor = self.connection.cursor()
+        try:
+            print("i am wrong")
+            uid = ''.join(filter(str.isalnum, uid))
+            print("status+", status)
+            print(uid)
+            cursor.execute("UPDATE experiment_compilerecord SET status='%s' WHERE uid='%s'" % (status, uid))
+            self.connection.commit()
+        except:
+            print("?")
+            self.connection.rollback()
+        finally:
+            print("?")
+            cursor.close()
+        print("!")
 
 
 def main():

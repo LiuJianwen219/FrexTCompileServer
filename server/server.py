@@ -8,9 +8,9 @@ from server.help import HelpHandler
 from server.health import HealthHandler
 from filehandler.upfile import UpfileHandler
 from filehandler.downfile import DownfileHandler
-from compiler.compile import CompileHandler
-from situation.status import StatusHandler
-from situation.result import ResultHandler
+from compiler.compile import CompileHandler, CompileOnlineHandler
+from situation.status import StatusHandler, StatusOnlineHandler
+from situation.result import ResultHandler, ResultOnlineHandler
 
 
 from tornado.options import define, options
@@ -36,6 +36,10 @@ class CompileServer:
             (r"/compile/", CompileHandler),
             (r"/compile_status/", StatusHandler),
             (r"/compile_result/", ResultHandler),
+
+            (r"/compile_online/", CompileOnlineHandler),
+            (r"/compile_online_status/", StatusOnlineHandler),
+            (r"/compile_online_result/", ResultOnlineHandler),
             (r"/", HelpHandler),
         ])
         http_server = tornado.httpserver.HTTPServer(app)

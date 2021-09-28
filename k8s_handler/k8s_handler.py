@@ -108,6 +108,91 @@ class k8s_handler:
 
         return job
 
+    def create_online_job_object(self, values):
+        # volumes mount to pod
+        print(values)
+        volume_mount_vivado = client.V1VolumeMount(
+            name="vivado",
+            mount_path=const.vivadoPath,
+        )
+
+        # volume definitions
+        volume_vivado = client.V1Volume(
+            name="vivado",
+            host_path=client.V1HostPathVolumeSource(
+                path=const.vivadoPath,
+                type="Directory",
+            )
+        )
+
+        # Configureate Pod template container
+        print([
+                "main.py",
+                "-u"+values[c_const.c_userId],
+                "-E"+values[c_const.c_experimentType],
+                "-X"+values[c_const.c_experimentId],
+                "-C"+values[c_const.c_compileId],
+                "-F"+values[c_const.c_fileNames],
+                "-n"+values[c_const.c_topModuleName],
+                "-l"+values[c_const.c_tclName],
+                "-f"+values[c_const.c_fileServerUrl],
+                "-x"+values[c_const.c_compile_server_url],
+                "-i"+values[c_const.c_thread_index],
+            ])
+        container = client.V1Container(
+            name="cmp-job-" + uuid.uuid1().__str__(),
+            image=const.image,
+            command=["python"],
+            args=[
+                "main.py",
+                "-u"+values[c_const.c_userId],
+                "-E"+values[c_const.c_experimentType],
+                "-X"+values[c_const.c_experimentId],
+                "-C"+values[c_const.c_compileId],
+                "-F"+values[c_const.c_fileNames],
+                "-n"+values[c_const.c_topModuleName],
+                "-l"+values[c_const.c_tclName],
+                "-f"+values[c_const.c_fileServerUrl],
+                "-x"+values[c_const.c_compile_server_url],
+                "-i"+values[c_const.c_thread_index],
+            ],
+            volume_mounts=[
+                volume_mount_vivado,
+            ],
+        )
+
+        # Create and configurate a spec section
+        template = client.V1PodTemplateSpec(
+            metadata=client.V1ObjectMeta(),
+            spec=client.V1PodSpec(
+                restart_policy="Never",
+                containers=[container],
+                volumes=[
+                    volume_vivado,
+                ],
+            ),
+        )
+
+        # Create the specification of deployment
+        spec = client.V1JobSpec(
+            template=template,
+            backoff_limit=4,
+            ttl_seconds_after_finished=const.ttl_seconds_after_finished,
+        )
+
+        # Instantiate the job object
+        self.jobName = "cmp-job-" + uuid.uuid1().__str__()
+        job = client.V1Job(
+            api_version="batch/v1",
+            kind="Job",
+            metadata=client.V1ObjectMeta(
+                name=self.jobName
+            ),
+            spec=spec,
+        )
+
+        return job
+
     def create_job(self, job):
         api_response = self.api_instance.create_namespaced_job(
             body=job,
