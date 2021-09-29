@@ -21,6 +21,6 @@ def file_writer(fire_dir, file_name, file_content):
         os.makedirs(fire_dir)
     with open(os.path.join(fire_dir, file_name), 'wb+') as destination:
         destination.write(file_content)
-    if len(file_content)<10:
+    if len(file_content)<1:
         return None
     return 1

@@ -17,5 +17,5 @@ mysql_db = "frext_test"
 
 mysql_online_db = "frext_online"
 
-web_online_server_url = "http://frext-testing-svc:8030/"
+web_online_server_url = "http://frext-online-svc:8080/"
 web_online_server_api_compile_result = "experiment/compile_result"

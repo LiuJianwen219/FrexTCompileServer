@@ -68,6 +68,7 @@ def compile_online_project(values):
         reporter.post_online_status(const.request_success, "获取tcl成功", "Success: get tcl file complete.\n")
 
     fileNames = json.loads(values[const.c_fileNames])
+    print(values[const.c_fileNames])
     for fileName in fileNames:
         if fh.get_src(fileName) == const.request_failed:
             reporter.post_online_result(const.request_failed, "获取src失败", "Failed: get {0} file error.\n".format(fileName))
