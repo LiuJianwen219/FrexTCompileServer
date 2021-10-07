@@ -1,3 +1,5 @@
+import time
+
 import requests
 import tornado.web
 from compiler import constants as const
@@ -131,6 +133,8 @@ def update_online_status(values):
     message = db_handler.select_online_compile_message(uid)[0]
     print("message: " + message)
     db_handler.update_online_compile_status(uid, values['status'])
-    db_handler.update_online_compile_message(uid, message + values['message'] + "\n")
+    db_handler.update_online_compile_message(uid, message +
+                                             str(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())) +
+                                             " " + values['message'] + "\n")
     return config.request_success
 
