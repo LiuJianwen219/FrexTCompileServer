@@ -10,7 +10,7 @@ WORKDIR /FrexT
 COPY ./bin/unzip /bin
 COPY ./ /FrexT
 
-RUN ["sed", "-i", "s/\r//g", "compile/compile.sh"]
-RUN ["sed", "-i", "s/\r//g", "compile/compile_online.sh"]
+RUN ["sed", "-i", "s/\r//g", "scripts/compile.sh"]
+RUN ["sed", "-i", "s/\r//g", "scripts/compile_online.sh"]
 ## make environment
 #RUN ["pip", "install", "-r", "requirements.txt"]

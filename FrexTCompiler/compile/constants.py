@@ -46,7 +46,7 @@ c_compile_server_url = "compileServerUrl"
 
 # -----------------------
 # other constants, maybe configurable in future
-compileScript = "compile/compile.sh"
+compileScript = "scripts/compile.sh"
 vivado = "/tools/Xilinx/Vivado/2020.1/bin/vivado"
 FPGAVersion = "xc7k160tffg676-2L"
 compileThread = "4"
@@ -66,7 +66,7 @@ c_compileId = "compileId"
 c_fileName = "fileName"
 c_fileNames = "fileNames"
 
-compileOnlineScript = "compile/compile_online.sh"
+compileOnlineScript = "scripts/compile_online.sh"
 
 status_online_API = "compile_online_status"
 result_online_API = "compile_online_result"
