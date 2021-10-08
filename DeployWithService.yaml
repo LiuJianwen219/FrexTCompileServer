@@ -67,6 +67,13 @@ spec:
     spec:
       serviceAccountName:
         frext
+      initContainers:
+      - name: volume-mount-hack
+        image: debian:stable-slim
+        command: ["sh", "-c", "chown -R 1001:1001 /nexus"]
+        volumeMounts:
+        - name: fs
+          mountPath: /nexus
       containers:
       - name: frext-compile
         image: wxwd14388/frext-compile:v0.2.3
@@ -79,7 +86,7 @@ spec:
       volumes:
         - name: fs
           hostPath:
-            path: /root/FrexT_data/frext-file-system
+            path: /root/FrexT_data/frext-file-system/log_compile
             type: Directory
       affinity:
         nodeAffinity:
