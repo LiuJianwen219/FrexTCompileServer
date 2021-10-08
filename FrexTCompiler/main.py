@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-
+import os
 import sys, getopt
 from compile import constants as const
 from compile import compile
@@ -57,6 +57,10 @@ def main(argv):
             values[const.c_fileNames] = arg
         else:
             sys.exit(3)
+
+    if not os.path.exists(const.work_dir):
+        os.makedirs(const.work_dir)
+
     if not const.c_experimentType in values:
         compile.compile_project(values)
     else:

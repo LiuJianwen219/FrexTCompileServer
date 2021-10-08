@@ -1,12 +1,11 @@
 import json
-import shutil
-import uuid
 
 import requests
 import logging
 import os
 from compile import constants as const
 from compile import filehandler
+from compile.ZipUtilities import ZipUtilities
 
 
 logger = logging.getLogger(__name__)
@@ -94,7 +93,6 @@ class FileRequest:
             const.c_testId: self.testId,
             const.c_submitId: self.submitId,
             const.c_topic: self.topic,
-            const.c_topModuleName: self.topModuleName,
         }
 
         sour_direction = const.work_dir
@@ -111,6 +109,60 @@ class FileRequest:
         r = requests.post(url, files=files, data=values)
         if r.status_code.__str__() != "200":
             logger.error("Post LOG failed: request status not health: " + r.headers.__str__())
+            return const.request_failed
+        return const.request_success
+
+    def post_rpt(self):
+        logger.info("Try to request RPT with values: " + json.dumps(self.values))
+
+        url = self.file_server_url + const.rpts_API + "/"
+        values = {
+            const.c_userId: self.userId,
+            const.c_testId: self.testId,
+            const.c_submitId: self.submitId,
+            const.c_topic: self.topic,
+        }
+
+        sour_direction = os.path.join(const.work_dir, "output", "impl_1")
+        sour_filename = self.topModuleName + const.rpts_suffix
+        source = os.path.join(sour_direction, sour_filename)
+        content = filehandler.file_reader(source)
+        if content is None:
+            logger.error("Post RPT failed, file not found.")
+            return const.request_failed
+
+        # files = {'file': ('nameoffile', open('namoffile', 'rb'), 'text/html', 'other header'),
+        #          'file2': ('nameoffile2', open('nameoffile2', 'rb'), 'application/xml', 'other header')}
+        files = {'file': content}
+        r = requests.post(url, files=files, data=values)
+        if r.status_code.__str__() != "200":
+            logger.error("Post LOG failed: request status not health: " + r.headers.__str__())
+            return const.request_failed
+        return const.request_success
+
+    def post_project(self):
+        logger.info("Try to request PROJECT with values: " + json.dumps(self.values))
+
+        url = self.file_server_url + const.projects_API + "/"
+        values = {
+            const.c_userId: self.userId,
+            const.c_testId: self.testId,
+            const.c_submitId: self.submitId,
+            const.c_topic: self.topic,
+        }
+
+        utilities = ZipUtilities()
+        utilities.toZip(const.work_dir, "")
+        if utilities.zip_file is None:
+            logger.error("Post PROJECT failed, file not found.")
+            return const.request_failed
+
+        # files = {'file': ('nameoffile', open('namoffile', 'rb'), 'text/html', 'other header'),
+        #          'file2': ('nameoffile2', open('nameoffile2', 'rb'), 'application/xml', 'other header')}
+        files = {'file': utilities.zip_file}
+        r = requests.post(url, files=files, data=values)
+        if r.status_code.__str__() != "200":
+            logger.error("Post PROJECT failed: request status not health: " + r.headers.__str__())
             return const.request_failed
         return const.request_success
 
@@ -225,6 +277,63 @@ class FileOnlineRequest:
             logger.error("Post online LOG failed: request status not health: " + r.headers.__str__())
             return const.request_failed
         return const.request_success
+
+    def post_online_rpt(self):
+        logger.info("Try to request RPT with values: " + json.dumps(self.values))
+
+        url = self.file_server_url + const.rpts_online_API + "/"
+        values = {
+            const.c_userId: self.userId,
+            const.c_experimentType: self.experimentType,
+            const.c_experimentId: self.experimentId,
+            const.c_compileId: self.compileId,
+            const.c_topModuleName: self.topModuleName,
+        }
+
+        sour_direction = os.path.join(const.work_dir, "output", "impl_1")
+        sour_filename = self.topModuleName + const.rpts_suffix
+        source = os.path.join(sour_direction, sour_filename)
+        content = filehandler.file_reader(source)
+        if content is None:
+            logger.error("Post RPT failed, file not found.")
+            return const.request_failed
+
+        # files = {'file': ('nameoffile', open('namoffile', 'rb'), 'text/html', 'other header'),
+        #          'file2': ('nameoffile2', open('nameoffile2', 'rb'), 'application/xml', 'other header')}
+        files = {'file': content}
+        r = requests.post(url, files=files, data=values)
+        if r.status_code.__str__() != "200":
+            logger.error("Post LOG failed: request status not health: " + r.headers.__str__())
+            return const.request_failed
+        return const.request_success
+
+    def post_online_project(self):
+        logger.info("Try to request PROJECT with values: " + json.dumps(self.values))
+
+        url = self.file_server_url + const.projects_online_API + "/"
+        values = {
+            const.c_userId: self.userId,
+            const.c_experimentType: self.experimentType,
+            const.c_experimentId: self.experimentId,
+            const.c_compileId: self.compileId,
+            const.c_topModuleName: self.topModuleName,
+        }
+
+        utilities = ZipUtilities()
+        utilities.toZip(const.work_dir, "")
+        if utilities.zip_file is None:
+            logger.error("Post PROJECT failed, file not found.")
+            return const.request_failed
+
+        # files = {'file': ('nameoffile', open('namoffile', 'rb'), 'text/html', 'other header'),
+        #          'file2': ('nameoffile2', open('nameoffile2', 'rb'), 'application/xml', 'other header')}
+        files = {'file': utilities.zip_file}
+        r = requests.post(url, files=files, data=values)
+        if r.status_code.__str__() != "200":
+            logger.error("Post PROJECT failed: request status not health: " + r.headers.__str__())
+            return const.request_failed
+        return const.request_success
+
 
     def post_online_bit(self):
         logger.info("Try to request online BIT with values: " + json.dumps(self.values))

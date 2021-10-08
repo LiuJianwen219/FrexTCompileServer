@@ -1,4 +1,4 @@
-image = "wxwd14388/frext-compiler:v1.2.5"
+image = "wxwd14388/frext-compiler:v1.2.6"
 
 compileScript = "compile.sh"
 

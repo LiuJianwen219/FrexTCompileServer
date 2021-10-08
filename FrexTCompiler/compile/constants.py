@@ -1,7 +1,7 @@
 # -----------------------
 # sys config
 
-work_dir = "/tmp"
+work_dir = "/data_project/"
 request_success = "Success"
 request_failed = "Failed"
 
@@ -21,6 +21,12 @@ bits_suffix = ".bit"
 
 logs_API = "logs"
 logs_suffix = ".log"
+
+rpts_API = "rpts"
+rpts_suffix = "_utilization_placed.rpt"
+
+projects_API = "projects"
+projects_suffix = ".zip"
 
 c_userId = "userId"
 c_testId = "testId"
@@ -50,7 +56,8 @@ compileThread = "4"
 src_API = "experiment"
 
 bits_online_API = "online_bits"
-
+rpts_online_API = "online_rpts"
+projects_online_API = "online_projects"
 logs_online_API = "online_logs"
 
 c_experimentType = "experimentType"

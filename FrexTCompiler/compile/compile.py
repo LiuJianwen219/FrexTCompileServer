@@ -47,7 +47,19 @@ def compile_project(values):
         reporter.post_result(const.request_failed, "提交log失败", "Failed: put log file error.\n")
         return
     else:
-        reporter.post_status(const.request_success, "获取log成功", "Success: put log file complete.\n")
+        reporter.post_status(const.request_success, "提交log成功", "Success: put log file complete.\n")
+
+    if fh.post_rpt() == const.request_failed:
+        reporter.post_result(const.request_failed, "提交rpt失败", "Failed: put rpt file error.\n")
+        return
+    else:
+        reporter.post_status(const.request_success, "提交rpt成功", "Success: put rpt file complete.\n")
+
+    if fh.post_project() == const.request_failed:
+        reporter.post_result(const.request_failed, "提交project失败", "Failed: put project file error.\n")
+        return
+    else:
+        reporter.post_status(const.request_success, "提交project成功", "Success: put project file complete.\n")
 
     if fh.post_bit() == const.request_failed:
         reporter.post_result(const.request_failed, "编译失败", "Failed: compile bit file error.\n")
@@ -93,55 +105,22 @@ def compile_online_project(values):
         reporter.post_online_result(const.request_failed, "提交log失败", "Failed: put log file error.\n")
         return
     else:
-        reporter.post_online_status(const.request_success, "获取log成功", "Success: put log file complete.\n")
+        reporter.post_online_status(const.request_success, "提交log成功", "Success: put log file complete.\n")
+
+    if fh.post_online_rpt() == const.request_failed:
+        reporter.post_online_result(const.request_failed, "提交rpt失败", "Failed: put rpt file error.\n")
+        return
+    else:
+        reporter.post_online_status(const.request_success, "提交rpt成功", "Success: put rpt file complete.\n")
+
+    if fh.post_online_project() == const.request_failed:
+        reporter.post_online_result(const.request_failed, "提交project失败", "Failed: put project file error.\n")
+        return
+    else:
+        reporter.post_online_status(const.request_success, "提交project成功", "Success: put project file complete.\n")
 
     if fh.post_online_bit() == const.request_failed:
         reporter.post_online_result(const.request_failed, "编译失败", "Failed: compile bit file error.\n")
         return
     else:
         reporter.post_online_result(const.request_success, "编译成功", "Success: compile bit file complete.\n")
-
-
-# class CompileHandler(tornado.web.RequestHandler):
-#     def post(self, *args, **kwargs):
-#         print(args)
-#         print(kwargs)
-#         userId = self.get_argument("userId")
-#         testId = self.get_argument("testId")
-#         submitId = self.get_argument("submitId")
-#         topic = self.get_argument("topic")
-#         topModuleName = self.get_argument("topModuleName")
-#         values = {
-#             "userId": userId,
-#             "testId": testId,
-#             "submitId": submitId,
-#             "topic": topic,
-#             "topModuleName": topModuleName,
-#             "tclName": const.tcls_Name,
-#             const.c_file_server_url: "",
-#         }
-#         fh = utils.FileRequest(values)
-#         fh.get_tcls()
-#         fh.get_questions()
-#         fh.get_tests()
-#
-#         subprocess.call([
-#             "/bin/bash",
-#             const.compileScript,
-#             os.path.join(const.work_dir, topic + const.questions_suffix),
-#             os.path.join(const.work_dir, topic),
-#             const.vivado,  # vivado.exe dir
-#             os.path.join(const.work_dir, topic + const.tcls_suffix),
-#             const.FPGAVersion,
-#             os.path.join(const.work_dir),
-#             topModuleName,
-#             const.compileThread,
-#         ], shell=False)
-#
-#         fh.post_logs()
-#         fh.post_bits()
-#
-#         self.write(const.request_success)
-#
-#     def write_error(self, status_code, **kwargs):
-#         self.write('Holly Shit Error? %s %s' % (status_code, const.request_failed))
