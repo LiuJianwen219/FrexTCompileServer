@@ -1,4 +1,7 @@
+import logging
+import os
 import signal
+import socket
 
 from server.server import CompileServer
 
@@ -13,6 +16,17 @@ from server.server import CompileServer
 #
 # def onSigTerm(signo, frame):
 #     print("onSigTerm")
+
+
+# get path
+# cur_dir = os.path.abspath(__file__).rsplit("/", 1)[0]
+rootPath = "/data/FrexT"
+log_path = os.path.join(rootPath, "FrexTCompileServer_" + socket.gethostname() + ".log")
+
+# encoding='utf-8'
+logging.basicConfig(filename=log_path, level=logging.DEBUG,
+                    filemode='w', format='%(levelname)s:%(asctime)s:%(message)s',
+                    datefmt='%Y-%d-%m %H:%M:%S')
 
 
 if __name__ == "__main__":
