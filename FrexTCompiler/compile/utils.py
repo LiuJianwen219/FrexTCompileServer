@@ -153,13 +153,19 @@ class FileRequest:
 
         utilities = ZipUtilities()
         utilities.toZip(const.work_dir, "")
-        if utilities.zip_file is None:
-            logger.error("Post PROJECT failed, file not found.")
+        sour_direction = const.work_dir
+        sour_filename = self.topModuleName + const.projects_suffix
+        source = os.path.join(sour_direction, sour_filename)
+        utilities.toLocal(source)
+
+        content = filehandler.file_reader(source)
+        if content is None:
+            logger.error("Post RPT failed, file not found.")
             return const.request_failed
 
         # files = {'file': ('nameoffile', open('namoffile', 'rb'), 'text/html', 'other header'),
         #          'file2': ('nameoffile2', open('nameoffile2', 'rb'), 'application/xml', 'other header')}
-        files = {'file': utilities.zip_file}
+        files = {'file': content}
         r = requests.post(url, files=files, data=values)
         if r.status_code.__str__() != "200":
             logger.error("Post PROJECT failed: request status not health: " + r.headers.__str__())
@@ -321,13 +327,19 @@ class FileOnlineRequest:
 
         utilities = ZipUtilities()
         utilities.toZip(const.work_dir, "")
-        if utilities.zip_file is None:
-            logger.error("Post PROJECT failed, file not found.")
+        sour_direction = const.work_dir
+        sour_filename = self.topModuleName + const.projects_suffix
+        source = os.path.join(sour_direction, sour_filename)
+        utilities.toLocal(source)
+
+        content = filehandler.file_reader(source)
+        if content is None:
+            logger.error("Post RPT failed, file not found.")
             return const.request_failed
 
         # files = {'file': ('nameoffile', open('namoffile', 'rb'), 'text/html', 'other header'),
         #          'file2': ('nameoffile2', open('nameoffile2', 'rb'), 'application/xml', 'other header')}
-        files = {'file': utilities.zip_file}
+        files = {'file': content}
         r = requests.post(url, files=files, data=values)
         if r.status_code.__str__() != "200":
             logger.error("Post PROJECT failed: request status not health: " + r.headers.__str__())

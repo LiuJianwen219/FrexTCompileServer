@@ -1,7 +1,7 @@
 # -----------------------
 # sys config
 
-work_dir = "/data_project/"
+work_dir = "/tmp/project/"
 request_success = "Success"
 request_failed = "Failed"
 
