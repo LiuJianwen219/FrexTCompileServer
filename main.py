@@ -27,6 +27,11 @@ log_path = os.path.join(rootPath, "FrexTCompileServer_" + socket.gethostname() +
 logging.basicConfig(filename=log_path, level=logging.DEBUG,
                     filemode='w', format='%(levelname)s:%(asctime)s:%(message)s',
                     datefmt='%Y-%d-%m %H:%M:%S')
+logging.debug('Welcome to use FrexT Compile System!')
+logging.info('This component a sub component of FrexT project.')
+logging.warning('Providing compile service,')
+logging.error('Current version is v1.0.0,')
+logging.critical("For helping, please see localhost:8012/help/")
 
 
 if __name__ == "__main__":
