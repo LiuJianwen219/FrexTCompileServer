@@ -73,6 +73,14 @@ spec:
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8012
+        volumeMounts:
+          - name: fs
+            mountPath: /data/FrexT
+      volumes:
+        - name: fs
+          hostPath:
+            path: /root/FrexT_data/frext-file-system
+            type: Directory
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
