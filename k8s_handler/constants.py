@@ -1,7 +1,5 @@
 image = "wxwd14388/frext-compiler:v1.2.6"
 
-compileScript = "compile.sh"
-
 vivadoPath = "/tools"
 
 vivado = "/tools/Xilinx/Vivado/2020.1/bin/vivado"
