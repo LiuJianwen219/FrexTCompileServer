@@ -76,7 +76,7 @@ spec:
           mountPath: /nexus
       containers:
       - name: frext-compile
-        image: wxwd14388/frext-compile:v0.2.3
+        image: wxwd14388/frext-compile:v0.2.4
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8012

@@ -1,4 +1,5 @@
 import json
+import uuid
 
 import requests
 import logging
@@ -247,7 +248,10 @@ class FileOnlineRequest:
             return const.request_failed
 
         if r.headers['content-type'] == "application/octet-stream" and r.content:
-            dest_direction = const.work_dir
+            if fileName.split(".")[-1] == "xci":
+                dest_direction = os.path.join(const.work_dir, str(uuid.uuid1()))
+            else:
+                dest_direction = const.work_dir
             dest_filename = fileName
             if not filehandler.file_writer(dest_direction, dest_filename, r.content):
                 return const.request_failed

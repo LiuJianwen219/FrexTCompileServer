@@ -50,19 +50,19 @@ def compile_project(values):
         reporter.post_status(const.request_success, "提交log成功", "Success: put log file complete.\n")
 
     if fh.post_rpt() == const.request_failed:
-        reporter.post_result(const.request_failed, "提交rpt失败", "Failed: put rpt file error.\n")
+        reporter.post_result(const.request_failed, "编译失败rpt", "Failed: put rpt file error.\n")
         return
     else:
         reporter.post_status(const.request_success, "提交rpt成功", "Success: put rpt file complete.\n")
 
     if fh.post_project() == const.request_failed:
-        reporter.post_result(const.request_failed, "提交project失败", "Failed: put project file error.\n")
+        reporter.post_result(const.request_failed, "编译失败project", "Failed: put project file error.\n")
         return
     else:
         reporter.post_status(const.request_success, "提交project成功", "Success: put project file complete.\n")
 
     if fh.post_bit() == const.request_failed:
-        reporter.post_result(const.request_failed, "编译失败", "Failed: compile bit file error.\n")
+        reporter.post_result(const.request_failed, "编译失败bit", "Failed: compile bit file error.\n")
         return
     else:
         reporter.post_result(const.request_success, "编译成功", "Success: compile bit file complete.\n")
