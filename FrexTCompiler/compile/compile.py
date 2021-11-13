@@ -108,13 +108,13 @@ def compile_online_project(values):
         reporter.post_online_status(const.request_success, "提交log成功", "Success: put log file complete.\n")
 
     if fh.post_online_rpt() == const.request_failed:
-        reporter.post_online_result(const.request_failed, "提交rpt失败", "Failed: put rpt file error.\n")
+        reporter.post_online_result(const.request_failed, "编译失败rpt", "Failed: put rpt file error.\n")
         return
     else:
         reporter.post_online_status(const.request_success, "提交rpt成功", "Success: put rpt file complete.\n")
 
     if fh.post_online_project() == const.request_failed:
-        reporter.post_online_result(const.request_failed, "提交project失败", "Failed: put project file error.\n")
+        reporter.post_online_result(const.request_failed, "编译失败project", "Failed: put project file error.\n")
         return
     else:
         reporter.post_online_status(const.request_success, "提交project成功", "Success: put project file complete.\n")

@@ -23,7 +23,8 @@ logs_API = "logs"
 logs_suffix = ".log"
 
 rpts_API = "rpts"
-rpts_suffix = "_utilization_placed.rpt"
+rpts_suffix = ".rpt"
+rpts_online_suffix = "_utilization_placed.rpt"
 
 projects_API = "projects"
 projects_suffix = ".zip"

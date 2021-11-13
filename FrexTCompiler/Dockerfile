@@ -4,11 +4,11 @@ COPY requirements.txt /tmp
 RUN ["pip", "install", "-r", "/tmp/requirements.txt"]
 
 # create workspace
-WORKDIR /FrexT
+WORKDIR /tmp
 
 # copy source
 COPY ./bin/unzip /bin
-COPY ./ /FrexT
+COPY ./ /tmp
 
 RUN ["sed", "-i", "s/\r//g", "scripts/compile.sh"]
 RUN ["sed", "-i", "s/\r//g", "scripts/compile_online.sh"]

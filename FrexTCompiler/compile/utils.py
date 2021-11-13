@@ -301,7 +301,7 @@ class FileOnlineRequest:
         }
 
         sour_direction = os.path.join(const.work_dir, "output", "impl_1")
-        sour_filename = self.topModuleName + const.rpts_suffix
+        sour_filename = self.topModuleName + const.rpts_online_suffix
         source = os.path.join(sour_direction, sour_filename)
         content = filehandler.file_reader(source)
         if content is None:

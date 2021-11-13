@@ -133,7 +133,7 @@ class CompileOnlineHandler(tornado.web.RequestHandler):
             const.c_compileId: compileId,
             const.c_topModuleName: topModuleName,
             const.c_fileNames: fileNames,
-            const.c_tclName: const.tcls_Name,
+            const.c_tclName: const.tcls_online_Name,
             const.c_fileServerUrl: config.file_server_url,
             const.c_compile_server_url: config.compile_server_url,
             "state": config.request_success,

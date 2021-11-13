@@ -1,4 +1,4 @@
-image = "wxwd14388/frext-compiler:v1.2.7"
+image = "wxwd14388/frext-compiler:v1.2.8"
 
 vivadoPath = "/tools"
 
